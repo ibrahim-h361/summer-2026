@@ -345,24 +345,24 @@
                     <button class="fam-btn" data-fam="salha_hesham_kids" onclick="selectFamily('salha_hesham_kids')"><span class="fem">🧕🏽👨🏻</span><span data-i18n="rs">Salha, Hesham & Kids</span></button>
                 </div>
                 <div class="cal-legend">
-                    <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#e8eee6;border:1px solid #c0d0bc"></span> Ibrahim & Haajar</span>
-                    <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#ddd4c2"></span> Wedding</span>
-                    <span class="cal-legend-item"><span class="cal-legend-dot fc1"></span> Khalifa</span>
-                    <span class="cal-legend-item"><span class="cal-legend-dot fc2"></span> Nailah</span>
-                    <span class="cal-legend-item"><span class="cal-legend-dot fc3"></span> Arwa</span>
-                    <span class="cal-legend-item"><span class="cal-legend-dot fc4"></span> Salha</span>
+                    <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#e8eee6;border:1px solid #c0d0bc"></span> <span data-i18n="legIb">Ibrahim & Haajar</span></span>
+                    <span class="cal-legend-item"><span class="cal-legend-dot" style="background:#ddd4c2"></span> <span data-i18n="legWed">Wedding</span></span>
+                    <span class="cal-legend-item"><span class="cal-legend-dot fc1"></span> <span data-i18n="legKh">Khalifa</span></span>
+                    <span class="cal-legend-item"><span class="cal-legend-dot fc2"></span> <span data-i18n="legNa">Nailah</span></span>
+                    <span class="cal-legend-item"><span class="cal-legend-dot fc3"></span> <span data-i18n="legAr">Arwa</span></span>
+                    <span class="cal-legend-item"><span class="cal-legend-dot fc4"></span> <span data-i18n="legSa">Salha</span></span>
                 </div>
                 <div class="cal-row">
                     <div>
-                        <h3>🇹🇳 Tunisia</h3>
-                        <p class="cal-sub">Ibrahim & Haajar: Jul 27 – Aug 10</p>
-                        <div class="cal-header"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+                        <h3 data-i18n="calTnH">🇹🇳 Tunisia</h3>
+                        <p class="cal-sub" data-i18n="calTnSub">Ibrahim & Haajar: Jul 27 – Aug 10</p>
+                        <div class="cal-header" id="cal-hdr-tn"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
                         <div class="cal-grid" id="cal-tn"></div>
                     </div>
                     <div>
-                        <h3>🇱🇾 Libya</h3>
-                        <p class="cal-sub">Ibrahim & Haajar: Aug 10 – Sep 2</p>
-                        <div class="cal-header"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
+                        <h3 data-i18n="calLyH">🇱🇾 Libya</h3>
+                        <p class="cal-sub" data-i18n="calLySub">Ibrahim & Haajar: Aug 10 – Sep 2</p>
+                        <div class="cal-header" id="cal-hdr-ly"><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span><span>S</span></div>
                         <div class="cal-grid" id="cal-ly"></div>
                     </div>
                 </div>
@@ -418,6 +418,9 @@
             rsvpNone:"No responses yet",rsvpCount:" confirmed so far",
             datesTitle:"When Will You Be There?",datesSub:"Select your family, then tap your start and end dates on each calendar.",
             tlTitle:"Who's there when",
+            legIb:"Ibrahim & Haajar",legWed:"Wedding",legKh:"Khalifa",legNa:"Nailah",legAr:"Arwa",legSa:"Salha",
+            calTnH:"🇹🇳 Tunisia",calTnSub:"Ibrahim & Haajar: Jul 27 – Aug 10",
+            calLyH:"🇱🇾 Libya",calLySub:"Ibrahim & Haajar: Aug 10 – Sep 2",
             lt:"When We'll Be in Libya",ld:"August 10 – September 2, 2026",
             lx:"We'll be in Shahhat for three weeks with Haajar's family. Looking forward to seeing everyone.",
             footer:"Made with love from Auckland",
@@ -445,6 +448,9 @@
             rsvpNone:"مافيش ردود بعد",rsvpCount:" أكّدو لحد توا",
             datesTitle:"وقتاش بتكونو هنيك؟",datesSub:"اختارو عائلتكم وبعدين اضغطو على أول وآخر يوم في كل تقويم.",
             tlTitle:"شكون هنيك ووقتاش",
+            legIb:"إبراهيم وهاجر",legWed:"العرس",legKh:"خليفة",legNa:"نائلة",legAr:"أروى",legSa:"صالحة",
+            calTnH:"🇹🇳 تونس",calTnSub:"إبراهيم وهاجر: ٢٧ يوليو – ١٠ أغسطس",
+            calLyH:"🇱🇾 ليبيا",calLySub:"إبراهيم وهاجر: ١٠ أغسطس – ٢ سبتمبر",
             lt:"وقتاش بنكونو في ليبيا",ld:"١٠ أغسطس – ٢ سبتمبر ٢٠٢٦",
             lx:"بنكونو في شحات تلت اسابيع مع عيلة هاجر. متلهفين نشوفوكم.",
             footer:"بكل حب من أوكلاند",
@@ -460,6 +466,14 @@
                 const k = el.getAttribute('data-i18n');
                 if (T[currentLang][k]) el.textContent = T[currentLang][k];
             });
+            // Update day-of-week headers
+            const daysEn = ['M','T','W','T','F','S','S'];
+            const daysAr = ['ن','ث','ر','خ','ج','س','ح'];
+            const dayLabels = currentLang === 'ar' ? daysAr : daysEn;
+            document.querySelectorAll('.cal-header').forEach(hdr => {
+                hdr.querySelectorAll('span').forEach((s, i) => s.textContent = dayLabels[i]);
+            });
+            renderCalendars();
             renderRsvp();
         }
 
@@ -682,6 +696,11 @@
 
         function fmtShort(ds) {
             const d = new Date(ds);
+            if (currentLang === 'ar') {
+                const mAr = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر'][d.getMonth()];
+                const dayNum = d.getDate().toString().replace(/[0-9]/g, c => '٠١٢٣٤٥٦٧٨٩'[c]);
+                return dayNum + ' ' + mAr;
+            }
             const m = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep'][d.getMonth()];
             return m + ' ' + d.getDate();
         }
