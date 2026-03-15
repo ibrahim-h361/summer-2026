@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summer 2026 - Ibrahim & Haajar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&family=Source+Sans+3:wght@300;400;600;700&family=Lora:wght@400;500;600;700&family=Nunito:wght@300;400;600&family=Cormorant+Garamond:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600&family=Amiri:wght@400;700&family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        button { cursor: pointer; border: none; background: none; font: inherit; }
+
+        /* ========== THEMES ========== */
+        [data-theme="ivory-sage"] {
+            --primary: #4a5d4a; --primary-light: #5a7258;
+            --accent: #b8a88a; --accent-light: #ddd4c2;
+            --bg: #faf8f4; --card-bg: #ffffff;
+            --text: #3a3a32; --text-light: #7a7a6e;
+            --hero-gradient: linear-gradient(160deg, #3d4f3d 0%, #5a7258 40%, #4a5d4a 100%);
+            --heading-font: 'Cormorant Garamond', serif; --body-font: 'DM Sans', sans-serif;
+            --card-radius: 12px; --card-shadow: 0 2px 16px rgba(74,93,74,0.07);
+            --card-border: 1px solid #e8e4dc;
+            --wedding-bg: linear-gradient(160deg, #3d4f3d 0%, #5a7258 35%, #6a8868 100%);
+            --wedding-text: #fff; --wedding-accent: #ddd4c2;
+            --rsvp-yes: #6a8868; --rsvp-no: #9a8a7a;
+            --tab-active-bg: #4a5d4a;
+        }
+        [data-theme="midnight-champagne"] {
+            --primary: #1a1f36; --primary-light: #2a3050;
+            --accent: #c4a882; --accent-light: #e2d5c0;
+            --bg: #f5f4f2; --card-bg: #ffffff;
+            --text: #1a1f36; --text-light: #6b7085;
+            --hero-gradient: linear-gradient(160deg, #0f1424 0%, #1a1f36 40%, #252b48 100%);
+            --heading-font: 'Playfair Display', serif; --body-font: 'Inter', sans-serif;
+            --card-radius: 8px; --card-shadow: 0 4px 24px rgba(26,31,54,0.06);
+            --card-border: none;
+            --wedding-bg: linear-gradient(160deg, #0f1424 0%, #1a1f36 40%, #252b48 100%);
+            --wedding-text: #e2d5c0; --wedding-accent: #c4a882;
+            --rsvp-yes: #3a5070; --rsvp-no: #7a7a8a;
+            --tab-active-bg: #1a1f36;
+        }
+        [data-theme="charcoal-copper"] {
+            --primary: #2c2c2c; --primary-light: #444444;
+            --accent: #b87333; --accent-light: #daa06d;
+            --bg: #f7f6f4; --card-bg: #ffffff;
+            --text: #2c2c2c; --text-light: #777770;
+            --hero-gradient: linear-gradient(160deg, #1a1a1a 0%, #2c2c2c 40%, #3a3a3a 100%);
+            --heading-font: 'Source Sans 3', sans-serif; --body-font: 'Source Sans 3', sans-serif;
+            --card-radius: 2px; --card-shadow: none; --card-border: none;
+            --card-left-border: 3px solid #b87333;
+            --wedding-bg: linear-gradient(160deg, #1a1a1a 0%, #2c2c2c 40%, #3a3a3a 100%);
+            --wedding-text: #fff; --wedding-accent: #daa06d;
+            --rsvp-yes: #b87333; --rsvp-no: #777770;
+            --tab-active-bg: #2c2c2c;
+        }
+        [data-theme="plum-gold"] {
+            --primary: #3d1f3d; --primary-light: #5a355a;
+            --accent: #c9a227; --accent-light: #e8d07a;
+            --bg: #f8f6fa; --card-bg: #ffffff;
+            --text: #2d1f2d; --text-light: #7a6b7a;
+            --hero-gradient: linear-gradient(160deg, #2a142a 0%, #3d1f3d 40%, #4e2d4e 100%);
+            --heading-font: 'Lora', serif; --body-font: 'Nunito', sans-serif;
+            --card-radius: 16px; --card-shadow: 0 6px 28px rgba(61,31,61,0.06);
+            --card-border: none;
+            --wedding-bg: linear-gradient(160deg, #2a142a 0%, #3d1f3d 40%, #4e2d4e 100%);
+            --wedding-text: #e8d07a; --wedding-accent: #c9a227;
+            --rsvp-yes: #5a355a; --rsvp-no: #7a6b7a;
+            --tab-active-bg: #3d1f3d;
+        }
+
+        [dir="rtl"] { --heading-font: 'Amiri', serif !important; --body-font: 'Tajawal', sans-serif !important; }
+
+        /* ========== BASE ========== */
+        body {
+            font-family: var(--body-font); background: var(--bg); color: var(--text);
+            line-height: 1.65; transition: background 0.5s, color 0.5s; overflow-x: hidden;
+        }
+        h1, h2, h3 { font-family: var(--heading-font); line-height: 1.2; }
+
+        /* ========== TOP BAR ========== */
+        .top-bar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 0 20px; background: var(--primary); height: 48px;
+            box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+        }
+        .theme-tabs { display: flex; gap: 0; height: 100%; }
+        .theme-tab {
+            padding: 0 18px; height: 100%; display: flex; align-items: center;
+            color: rgba(255,255,255,0.5); font-size: 13px; font-weight: 500;
+            letter-spacing: 0.03em; transition: all 0.3s;
+            border-bottom: 2px solid transparent; white-space: nowrap;
+        }
+        .theme-tab:hover { color: rgba(255,255,255,0.8); }
+        .theme-tab.active { color: #fff; border-bottom-color: var(--accent); }
+        .lang-toggle {
+            padding: 6px 18px; border-radius: 4px;
+            background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.9);
+            font-size: 13px; font-weight: 500; transition: background 0.2s;
+        }
+        .lang-toggle:hover { background: rgba(255,255,255,0.2); }
+
+        /* ========== HERO ========== */
+        .hero {
+            margin-top: 48px; background: var(--hero-gradient); color: #fff;
+            text-align: center; padding: 72px 24px 56px; position: relative;
+        }
+        .hero::after {
+            content: ''; position: absolute; bottom: -1px; left: 0; right: 0;
+            height: 80px; background: linear-gradient(transparent, var(--bg));
+        }
+        .hero h1 { font-size: clamp(2.2rem, 6vw, 3.6rem); margin-bottom: 10px; font-weight: 700; }
+        .hero .subtitle { font-size: clamp(1rem, 2.8vw, 1.3rem); opacity: 0.85; margin-bottom: 6px; font-weight: 300; }
+        .hero .tagline { font-size: 0.9rem; opacity: 0.6; letter-spacing: 0.04em; text-transform: uppercase; }
+
+        /* ========== CONTAINER ========== */
+        .container { max-width: 860px; margin: 0 auto; padding: 0 24px; }
+        section { padding: 44px 0; }
+        .section-title {
+            font-size: clamp(1.4rem, 3.5vw, 1.9rem); text-align: center;
+            margin-bottom: 32px; color: var(--text); font-weight: 600;
+        }
+        .section-divider { width: 48px; height: 2px; background: var(--accent-light); margin: 0 auto 32px; border-radius: 1px; }
+
+        /* ========== ROUTE ========== */
+        .route-visual { display: flex; align-items: center; justify-content: center; gap: 0; padding: 24px 0 8px; flex-wrap: wrap; }
+        .route-stop { text-align: center; padding: 8px 14px; }
+        .route-stop .city { font-family: var(--heading-font); font-size: 0.82rem; font-weight: 600; color: var(--primary-light); }
+        .route-stop .flag { font-size: 1.3rem; display: block; margin-bottom: 4px; }
+        .route-arrow { color: var(--accent); font-size: 1rem; padding: 0 2px; opacity: 0.5; }
+        [dir="rtl"] .route-arrow { transform: scaleX(-1); }
+
+        /* ========== COUNTDOWN ========== */
+        .countdown-wrap { text-align: center; padding: 36px 0 16px; }
+        .countdown-label { font-size: 0.9rem; color: var(--text-light); margin-bottom: 16px; letter-spacing: 0.04em; text-transform: uppercase; }
+        .countdown { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        .countdown .unit {
+            background: var(--card-bg); border: var(--card-border, none);
+            border-radius: var(--card-radius); box-shadow: var(--card-shadow);
+            padding: 14px 18px; min-width: 76px; text-align: center;
+        }
+        [data-theme="charcoal-copper"] .countdown .unit { border-left: var(--card-left-border); }
+        .countdown .unit .num { font-family: var(--heading-font); font-size: 1.9rem; font-weight: 700; color: var(--primary-light); display: block; }
+        .countdown .unit .lbl { font-size: 0.7rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.08em; }
+
+        /* ========== STATS ========== */
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+        .stat-card {
+            background: var(--card-bg); border: var(--card-border, none);
+            border-radius: var(--card-radius); box-shadow: var(--card-shadow);
+            padding: 22px 14px; text-align: center; transition: transform 0.25s;
+        }
+        [data-theme="charcoal-copper"] .stat-card { border-left: var(--card-left-border); }
+        .stat-card:hover { transform: translateY(-2px); }
+        .stat-card .stat-icon { font-size: 1.5rem; margin-bottom: 6px; }
+        .stat-card .stat-val { font-family: var(--heading-font); font-size: 1.35rem; font-weight: 700; color: var(--primary-light); }
+        .stat-card .stat-label { font-size: 0.72rem; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.06em; margin-top: 3px; }
+
+        /* ========== TIMELINE ========== */
+        .timeline { position: relative; padding-left: 36px; }
+        [dir="rtl"] .timeline { padding-left: 0; padding-right: 36px; }
+        .timeline::before { content: ''; position: absolute; left: 12px; top: 0; bottom: 0; width: 2px; background: var(--accent-light); }
+        [dir="rtl"] .timeline::before { left: auto; right: 12px; }
+        .phase { position: relative; margin-bottom: 24px; cursor: pointer; }
+        .phase::before {
+            content: ''; position: absolute; left: -30px; top: 8px;
+            width: 14px; height: 14px; border-radius: 50%; background: var(--accent);
+            border: 3px solid var(--bg); box-shadow: 0 0 0 2px var(--accent);
+            z-index: 1; transition: transform 0.2s;
+        }
+        [dir="rtl"] .phase::before { left: auto; right: -30px; }
+        .phase:hover::before { transform: scale(1.25); }
+        .phase-card {
+            background: var(--card-bg); border: var(--card-border, none);
+            border-radius: var(--card-radius); box-shadow: var(--card-shadow);
+            padding: 20px 24px; transition: all 0.3s;
+        }
+        [data-theme="charcoal-copper"] .phase-card { border-left: var(--card-left-border); }
+        .phase:hover .phase-card { transform: translateX(3px); }
+        [dir="rtl"] .phase:hover .phase-card { transform: translateX(-3px); }
+        .phase-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+        .phase-title { font-size: 1.1rem; font-weight: 600; }
+        .phase-dates { font-size: 0.82rem; color: var(--accent); font-weight: 600; white-space: nowrap; }
+        .phase-desc {
+            margin-top: 0; color: var(--text-light); font-size: 0.92rem; line-height: 1.7;
+            max-height: 0; overflow: hidden; transition: max-height 0.4s ease, margin-top 0.3s ease;
+        }
+        .phase.open .phase-desc { max-height: 200px; margin-top: 12px; }
+        .phase-chevron { display: inline-block; font-size: 0.65rem; color: var(--accent); transition: transform 0.3s; margin-left: 6px; }
+        [dir="rtl"] .phase-chevron { margin-left: 0; margin-right: 6px; }
+        .phase.open .phase-chevron { transform: rotate(90deg); }
+
+        /* ========== WEDDING SECTION (BIG) ========== */
+        .wedding-section {
+            background: var(--wedding-bg); color: var(--wedding-text);
+            padding: 56px 24px 48px; text-align: center; margin: 20px 0;
+            border-radius: var(--card-radius);
+        }
+        .wedding-section h2 { font-size: clamp(2rem, 5vw, 2.8rem); margin-bottom: 10px; font-weight: 700; }
+        .wedding-date { font-size: 1.2rem; font-weight: 600; margin-bottom: 4px; opacity: 0.9; }
+        .wedding-location { font-size: 1rem; opacity: 0.65; margin-bottom: 20px; }
+        .wedding-desc { font-size: 1rem; opacity: 0.85; max-width: 460px; margin: 0 auto 36px; line-height: 1.75; }
+
+        /* ========== RSVP ========== */
+        .rsvp-container { max-width: 420px; margin: 0 auto; }
+        .rsvp-label {
+            font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em;
+            opacity: 0.6; margin-bottom: 14px;
+        }
+        .rsvp-card {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 14px 18px; margin-bottom: 8px;
+            background: rgba(255,255,255,0.08); border-radius: 8px;
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.3s;
+        }
+        .rsvp-card:hover { background: rgba(255,255,255,0.12); }
+        .rsvp-card.yes { background: rgba(255,255,255,0.15); border-color: rgba(255,255,255,0.25); }
+        .rsvp-card.no { opacity: 0.5; }
+        .rsvp-name { font-weight: 500; font-size: 0.95rem; }
+        .rsvp-btn {
+            padding: 6px 16px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;
+            transition: all 0.2s; color: var(--wedding-text); letter-spacing: 0.02em;
+        }
+        .rsvp-btn.pending {
+            background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.3);
+        }
+        .rsvp-btn.yes-btn {
+            background: rgba(255,255,255,0.22); border: 1px solid rgba(255,255,255,0.4);
+        }
+        .rsvp-btn.no-btn {
+            background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.15);
+        }
+        .rsvp-btn:hover { transform: scale(1.05); }
+        .rsvp-summary {
+            margin-top: 18px; font-size: 0.85rem; opacity: 0.6;
+        }
+
+        /* ========== LIBYA ========== */
+        .libya-section {
+            background: var(--card-bg); border: var(--card-border, none);
+            border-radius: var(--card-radius); box-shadow: var(--card-shadow);
+            padding: 36px 32px; text-align: center;
+        }
+        [data-theme="charcoal-copper"] .libya-section { border-left: var(--card-left-border); }
+        .libya-section h2 { color: var(--primary-light); margin-bottom: 8px; font-weight: 600; }
+        .libya-dates { font-size: 1.05rem; color: var(--accent); font-weight: 600; margin-bottom: 14px; }
+        .libya-desc { color: var(--text-light); max-width: 480px; margin: 0 auto; line-height: 1.75; }
+
+        /* ========== FOOTER ========== */
+        footer { text-align: center; padding: 36px 20px; color: var(--text-light); font-size: 0.8rem; }
+
+        /* ========== ANIMATIONS ========== */
+        .fade-up { opacity: 0; transform: translateY(20px); transition: opacity 0.5s ease, transform 0.5s ease; }
+        .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 640px) {
+            .top-bar { padding: 0 10px; height: 44px; }
+            .theme-tab { padding: 0 10px; font-size: 11px; }
+            .hero { padding: 56px 16px 44px; margin-top: 44px; }
+            .countdown .unit { min-width: 64px; padding: 10px 8px; }
+            .countdown .unit .num { font-size: 1.5rem; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .timeline { padding-left: 28px; }
+            [dir="rtl"] .timeline { padding-left: 0; padding-right: 28px; }
+            .phase::before { left: -22px; width: 12px; height: 12px; }
+            [dir="rtl"] .phase::before { left: auto; right: -22px; }
+            .wedding-section { padding: 40px 16px 36px; }
+            .libya-section { padding: 28px 18px; }
+            .route-stop { padding: 6px 8px; }
+            .route-stop .city { font-size: 0.72rem; }
+            .route-stop .flag { font-size: 1.1rem; }
+            .rsvp-card { padding: 12px 14px; }
+        }
+        @media print {
+            .top-bar { display: none; }
+            .hero { margin-top: 0; }
+            .phase-desc { max-height: none !important; }
+            .fade-up { opacity: 1 !important; transform: none !important; }
+        }
+    </style>
+</head>
+<body data-theme="ivory-sage">
+
+    <nav class="top-bar">
+        <div class="theme-tabs">
+            <button class="theme-tab active" data-t="ivory-sage" onclick="setTheme('ivory-sage')" data-i18n-tab="tab1">Ivory & Sage</button>
+            <button class="theme-tab" data-t="midnight-champagne" onclick="setTheme('midnight-champagne')" data-i18n-tab="tab2">Midnight</button>
+            <button class="theme-tab" data-t="charcoal-copper" onclick="setTheme('charcoal-copper')" data-i18n-tab="tab3">Charcoal</button>
+            <button class="theme-tab" data-t="plum-gold" onclick="setTheme('plum-gold')" data-i18n-tab="tab4">Plum & Gold</button>
+        </div>
+        <button class="lang-toggle" onclick="toggleLang()">العربية</button>
+    </nav>
+
+    <header class="hero">
+        <h1 data-i18n="title">Summer 2026</h1>
+        <p class="subtitle" data-i18n="subtitle">Ibrahim & Haajar's Mediterranean Journey</p>
+        <p class="tagline" data-i18n="tagline">Auckland · Milan · Tunisia · Libya</p>
+    </header>
+
+    <main class="container">
+
+        <div class="route-visual fade-up">
+            <div class="route-stop"><span class="flag">🇳🇿</span><span class="city" data-i18n="auckland">Auckland</span></div>
+            <span class="route-arrow">→</span>
+            <div class="route-stop"><span class="flag">🇮🇹</span><span class="city" data-i18n="milan">Milan</span></div>
+            <span class="route-arrow">→</span>
+            <div class="route-stop"><span class="flag">🇹🇳</span><span class="city" data-i18n="beniKhiar">Beni Khiar</span></div>
+            <span class="route-arrow">→</span>
+            <div class="route-stop"><span class="flag">🇱🇾</span><span class="city" data-i18n="shahhat">Shahhat</span></div>
+            <span class="route-arrow">→</span>
+            <div class="route-stop"><span class="flag">🇮🇹</span><span class="city" data-i18n="milan">Milan</span></div>
+            <span class="route-arrow">→</span>
+            <div class="route-stop"><span class="flag">🇳🇿</span><span class="city" data-i18n="auckland">Auckland</span></div>
+        </div>
+
+        <div class="countdown-wrap fade-up">
+            <p class="countdown-label" data-i18n="partyCountdownLabel">Countdown to the Wedding Celebration</p>
+            <div class="countdown">
+                <div class="unit"><span class="num" id="cd-days">--</span><span class="lbl" data-i18n="days">Days</span></div>
+                <div class="unit"><span class="num" id="cd-hours">--</span><span class="lbl" data-i18n="hours">Hours</span></div>
+                <div class="unit"><span class="num" id="cd-min">--</span><span class="lbl" data-i18n="minutes">Min</span></div>
+                <div class="unit"><span class="num" id="cd-sec">--</span><span class="lbl" data-i18n="seconds">Sec</span></div>
+            </div>
+        </div>
+
+        <section class="fade-up">
+            <h2 class="section-title" data-i18n="statsTitle">The Trip at a Glance</h2>
+            <div class="section-divider"></div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-icon">🗓</div><div class="stat-val" data-i18n="durationVal">45 Days</div><div class="stat-label" data-i18n="duration">Duration</div></div>
+                <div class="stat-card"><div class="stat-icon">🌍</div><div class="stat-val" data-i18n="countriesVal">5</div><div class="stat-label" data-i18n="countries">Countries</div></div>
+                <div class="stat-card"><div class="stat-icon">✈️</div><div class="stat-val" data-i18n="flightsVal">10</div><div class="stat-label" data-i18n="flights">Flights</div></div>
+                <div class="stat-card"><div class="stat-icon">📍</div><div class="stat-val" data-i18n="distanceVal">36,000 km</div><div class="stat-label" data-i18n="distance">Distance</div></div>
+            </div>
+        </section>
+
+        <section class="fade-up">
+            <h2 class="section-title" data-i18n="timelineTitle">Our Itinerary</h2>
+            <div class="section-divider"></div>
+            <div class="timeline">
+                <div class="phase open" onclick="togglePhase(this)">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-title">🇮🇹 <span data-i18n="phase1Title">Milan, Italy</span> <span class="phase-chevron">▶</span></span>
+                            <span class="phase-dates" data-i18n="phase1Dates">July 25 – 27</span>
+                        </div>
+                        <div class="phase-desc" data-i18n="phase1Desc">Landing in Milan on the 25th. A few days with mama, papa & Yasmeen — Como day trip on the 26th.</div>
+                    </div>
+                </div>
+                <div class="phase" onclick="togglePhase(this)">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-title">🇹🇳 <span data-i18n="phase2Title">Beni Khiar, Tunisia</span> <span class="phase-chevron">▶</span></span>
+                            <span class="phase-dates" data-i18n="phase2Dates">July 27 – August 10</span>
+                        </div>
+                        <div class="phase-desc" data-i18n="phase2Desc">Home base in Beni Khiar. Two weeks with the family, good food, and the beach. Selma & Yasmeen will be there too.</div>
+                    </div>
+                </div>
+                <div class="phase" onclick="togglePhase(this)">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-title">💍 <span data-i18n="partyPhaseTitle">Wedding Celebration Part 2</span> <span class="phase-chevron">▶</span></span>
+                            <span class="phase-dates" data-i18n="partyPhaseDates">August 7 – 8</span>
+                        </div>
+                        <div class="phase-desc" data-i18n="partyPhaseDesc">The wedding celebration with the whole family in Beni Khiar. Let us know if you can make it!</div>
+                    </div>
+                </div>
+                <div class="phase" onclick="togglePhase(this)">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-title">🇱🇾 <span data-i18n="phase3Title">Shahhat, Libya</span> <span class="phase-chevron">▶</span></span>
+                            <span class="phase-dates" data-i18n="phase3Dates">August 10 – September 2</span>
+                        </div>
+                        <div class="phase-desc" data-i18n="phase3Desc">Three weeks in Shahhat with Haajar's family. Can't wait to see everyone.</div>
+                    </div>
+                </div>
+                <div class="phase" onclick="togglePhase(this)">
+                    <div class="phase-card">
+                        <div class="phase-header">
+                            <span class="phase-title">🏠 <span data-i18n="phase4Title">Return Journey</span> <span class="phase-chevron">▶</span></span>
+                            <span class="phase-dates" data-i18n="phase4Dates">September 3 – 6</span>
+                        </div>
+                        <div class="phase-desc" data-i18n="phase4Desc">Back through Milan and Hong Kong to Auckland. One night at the airport hotel, then home.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== WEDDING + RSVP (BIG SECTION) ===== -->
+        <section class="fade-up">
+            <div class="wedding-section">
+                <h2 data-i18n="weddingTitle">Wedding Celebration Part 2</h2>
+                <p class="wedding-date" data-i18n="weddingDate">August 7 – 8, 2026</p>
+                <p class="wedding-location" data-i18n="weddingLocation">Beni Khiar, Tunisia</p>
+                <p class="wedding-desc" data-i18n="weddingDesc">Come celebrate with us in Beni Khiar! Let us know if your family can make it.</p>
+
+                <div class="rsvp-container">
+                    <p class="rsvp-label" data-i18n="rsvpLabel">Can you make it?</p>
+
+                    <div class="rsvp-card" id="rsvp-khalifa_khadija">
+                        <span class="rsvp-name" data-i18n="rsvp_khalifa">Khalifa & Khadija</span>
+                        <button class="rsvp-btn pending" onclick="cycleRsvp('khalifa_khadija')" data-i18n-rsvp="khalifa_khadija">Tap to respond</button>
+                    </div>
+                    <div class="rsvp-card" id="rsvp-nailah_remas">
+                        <span class="rsvp-name" data-i18n="rsvp_nailah">Nailah & Remas</span>
+                        <button class="rsvp-btn pending" onclick="cycleRsvp('nailah_remas')" data-i18n-rsvp="nailah_remas">Tap to respond</button>
+                    </div>
+                    <div class="rsvp-card" id="rsvp-arwa_baset_kids">
+                        <span class="rsvp-name" data-i18n="rsvp_arwa">Arwa, Baset & Kids</span>
+                        <button class="rsvp-btn pending" onclick="cycleRsvp('arwa_baset_kids')" data-i18n-rsvp="arwa_baset_kids">Tap to respond</button>
+                    </div>
+                    <div class="rsvp-card" id="rsvp-salha_hesham_kids">
+                        <span class="rsvp-name" data-i18n="rsvp_salha">Salha, Hesham & Kids</span>
+                        <button class="rsvp-btn pending" onclick="cycleRsvp('salha_hesham_kids')" data-i18n-rsvp="salha_hesham_kids">Tap to respond</button>
+                    </div>
+
+                    <p class="rsvp-summary" id="rsvp-summary" data-i18n-dynamic="rsvpSummary"></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===== LIBYA ===== -->
+        <section class="fade-up">
+            <div class="libya-section">
+                <h2 data-i18n="libyaTitle">When We'll Be in Libya</h2>
+                <p class="libya-dates" data-i18n="libyaDates">August 10 – September 2, 2026</p>
+                <p class="libya-desc" data-i18n="libyaDesc">We'll be in Shahhat for three weeks with Haajar's family. Looking forward to seeing everyone.</p>
+            </div>
+        </section>
+    </main>
+
+    <footer><p data-i18n="footerText">Made with love from Auckland</p></footer>
+
+    <script>
+        const BLOB_URL = 'https://jsonblob.com/api/jsonBlob/019cefc7-e0c2-78d0-a5a8-c754ee316d25';
+        let rsvpData = { khalifa_khadija: { status: null }, nailah_remas: { status: null }, arwa_baset_kids: { status: null }, salha_hesham_kids: { status: null } };
+
+        const T = {
+            en: {
+                title: "Summer 2026",
+                subtitle: "Ibrahim & Haajar's Mediterranean Journey",
+                tagline: "Auckland · Milan · Tunisia · Libya",
+                statsTitle: "The Trip at a Glance",
+                duration: "Duration", durationVal: "45 Days",
+                countries: "Countries", countriesVal: "5",
+                flights: "Flights", flightsVal: "10",
+                distance: "Distance", distanceVal: "36,000 km",
+                partyCountdownLabel: "Countdown to the Wedding Celebration",
+                days: "Days", hours: "Hours", minutes: "Min", seconds: "Sec",
+                timelineTitle: "Our Itinerary",
+                phase1Title: "Milan, Italy", phase1Dates: "July 25 – 27",
+                phase1Desc: "Landing in Milan on the 25th. A few days with mama, papa & Yasmeen — Como day trip on the 26th.",
+                phase2Title: "Beni Khiar, Tunisia", phase2Dates: "July 27 – August 10",
+                phase2Desc: "Home base in Beni Khiar. Two weeks with the family, good food, and the beach. Selma & Yasmeen will be there too.",
+                partyPhaseTitle: "Wedding Celebration Part 2", partyPhaseDates: "August 7 – 8",
+                partyPhaseDesc: "The wedding celebration with the whole family in Beni Khiar. Let us know if you can make it!",
+                phase3Title: "Shahhat, Libya", phase3Dates: "August 10 – September 2",
+                phase3Desc: "Three weeks in Shahhat with Haajar's family. Can't wait to see everyone.",
+                phase4Title: "Return Journey", phase4Dates: "September 3 – 6",
+                phase4Desc: "Back through Milan and Hong Kong to Auckland. One night at the airport hotel, then home.",
+                weddingTitle: "Wedding Celebration Part 2",
+                weddingDate: "August 7 – 8, 2026",
+                weddingLocation: "Beni Khiar, Tunisia",
+                weddingDesc: "Come celebrate with us in Beni Khiar! Let us know if your family can make it.",
+                rsvpLabel: "Can you make it?",
+                rsvp_khalifa: "Khalifa & Khadija", rsvp_nailah: "Nailah & Remas",
+                rsvp_arwa: "Arwa, Baset & Kids", rsvp_salha: "Salha, Hesham & Kids",
+                rsvpPending: "Tap to respond", rsvpYes: "We'll be there!", rsvpNo: "Can't make it",
+                rsvpSummaryNone: "No responses yet",
+                rsvpSummaryCount: " confirmed so far",
+                libyaTitle: "When We'll Be in Libya",
+                libyaDates: "August 10 – September 2, 2026",
+                libyaDesc: "We'll be in Shahhat for three weeks with Haajar's family. Looking forward to seeing everyone.",
+                footerText: "Made with love from Auckland",
+                auckland: "Auckland", milan: "Milan", beniKhiar: "Beni Khiar", shahhat: "Shahhat",
+                tab1: "Ivory & Sage", tab2: "Midnight", tab3: "Charcoal", tab4: "Plum & Gold"
+            },
+            ar: {
+                title: "صيف ٢٠٢٦",
+                subtitle: "رحلة إبراهيم وهاجر عبر المتوسط",
+                tagline: "أوكلاند · ميلانو · تونس · ليبيا",
+                statsTitle: "نظرة سريعة",
+                duration: "المدة", durationVal: "٤٥ يومًا",
+                countries: "الدول", countriesVal: "٥",
+                flights: "الرحلات", flightsVal: "١٠",
+                distance: "المسافة", distanceVal: "٣٦٬٠٠٠ كم",
+                partyCountdownLabel: "العد التنازلي لحفل الزفاف",
+                days: "أيام", hours: "ساعات", minutes: "دقائق", seconds: "ثوانٍ",
+                timelineTitle: "برنامج الرحلة",
+                phase1Title: "ميلانو، إيطاليا", phase1Dates: "٢٥ – ٢٧ يوليو",
+                phase1Desc: "الوصول إلى ميلانو يوم ٢٥. أيام مع ماما وبابا وياسمين — رحلة كومو يوم ٢٦.",
+                phase2Title: "بني خيار، تونس", phase2Dates: "٢٧ يوليو – ١٠ أغسطس",
+                phase2Desc: "المقر في بني خيار. أسبوعان مع العائلة والأكل الطيّب والبحر. سلمى وياسمين معنا.",
+                partyPhaseTitle: "حفل الزفاف - الجزء الثاني", partyPhaseDates: "٧ – ٨ أغسطس",
+                partyPhaseDesc: "حفل الزفاف مع العائلة كلها في بني خيار. خبّرونا إذا تقدروا تجوا!",
+                phase3Title: "شحات، ليبيا", phase3Dates: "١٠ أغسطس – ٢ سبتمبر",
+                phase3Desc: "ثلاثة أسابيع في شحات مع عائلة هاجر. نتطلع نشوف الكل.",
+                phase4Title: "رحلة العودة", phase4Dates: "٣ – ٦ سبتمبر",
+                phase4Desc: "الرجوع عبر ميلانو وهونغ كونغ إلى أوكلاند. ليلة وحدة عند المطار وبعدين البيت.",
+                weddingTitle: "حفل الزفاف - الجزء الثاني",
+                weddingDate: "٧ – ٨ أغسطس ٢٠٢٦",
+                weddingLocation: "بني خيار، تونس",
+                weddingDesc: "تعالوا احتفلوا معنا في بني خيار! خبّرونا إذا تقدروا تجوا.",
+                rsvpLabel: "تقدرون تجون؟",
+                rsvp_khalifa: "خليفة وخديجة", rsvp_nailah: "نائلة ورماس",
+                rsvp_arwa: "أروى وباسط والأطفال", rsvp_salha: "صالحة وهشام والأطفال",
+                rsvpPending: "اضغط للرد", rsvpYes: "إن شاء الله نكون هناك!", rsvpNo: "ما نقدر",
+                rsvpSummaryNone: "ما في ردود بعد",
+                rsvpSummaryCount: " أكّدوا لحد الحين",
+                libyaTitle: "متى بنكون في ليبيا",
+                libyaDates: "١٠ أغسطس – ٢ سبتمبر ٢٠٢٦",
+                libyaDesc: "بنكون في شحات ثلاثة أسابيع مع عائلة هاجر. نتطلع نشوف الكل.",
+                footerText: "بكل حب من أوكلاند",
+                auckland: "أوكلاند", milan: "ميلانو", beniKhiar: "بني خيار", shahhat: "شحات",
+                tab1: "عاجي وأخضر", tab2: "منتصف الليل", tab3: "فحمي", tab4: "بنفسجي وذهبي"
+            }
+        };
+
+        let currentLang = 'en';
+
+        function toggleLang() {
+            currentLang = currentLang === 'en' ? 'ar' : 'en';
+            document.documentElement.setAttribute('lang', currentLang);
+            document.documentElement.setAttribute('dir', currentLang === 'ar' ? 'rtl' : 'ltr');
+            document.querySelector('.lang-toggle').textContent = currentLang === 'en' ? 'العربية' : 'English';
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (T[currentLang][key]) el.textContent = T[currentLang][key];
+            });
+            document.querySelectorAll('[data-i18n-tab]').forEach(el => {
+                const key = el.getAttribute('data-i18n-tab');
+                if (T[currentLang][key]) el.textContent = T[currentLang][key];
+            });
+            renderRsvp();
+        }
+
+        function setTheme(name) {
+            document.body.setAttribute('data-theme', name);
+            document.querySelectorAll('.theme-tab').forEach(b => b.classList.toggle('active', b.dataset.t === name));
+        }
+
+        function togglePhase(el) { el.classList.toggle('open'); }
+
+        /* ========== RSVP ========== */
+        async function loadRsvp() {
+            try {
+                const res = await fetch(BLOB_URL);
+                if (res.ok) { rsvpData = await res.json(); renderRsvp(); }
+            } catch (e) { console.log('Using local RSVP data'); }
+        }
+
+        async function saveRsvp() {
+            try {
+                await fetch(BLOB_URL, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(rsvpData)
+                });
+            } catch (e) { console.log('Could not save RSVP remotely'); }
+        }
+
+        function cycleRsvp(key) {
+            const current = rsvpData[key]?.status;
+            if (current === null) rsvpData[key] = { status: 'yes' };
+            else if (current === 'yes') rsvpData[key] = { status: 'no' };
+            else rsvpData[key] = { status: null };
+            renderRsvp();
+            saveRsvp();
+        }
+
+        function renderRsvp() {
+            const lang = T[currentLang];
+            let yesCount = 0;
+            for (const key of Object.keys(rsvpData)) {
+                const card = document.getElementById('rsvp-' + key);
+                const btn = card?.querySelector('.rsvp-btn');
+                if (!card || !btn) continue;
+                const s = rsvpData[key]?.status;
+                card.classList.remove('yes', 'no');
+                btn.classList.remove('pending', 'yes-btn', 'no-btn');
+                if (s === 'yes') {
+                    card.classList.add('yes');
+                    btn.classList.add('yes-btn');
+                    btn.textContent = lang.rsvpYes;
+                    yesCount++;
+                } else if (s === 'no') {
+                    card.classList.add('no');
+                    btn.classList.add('no-btn');
+                    btn.textContent = lang.rsvpNo;
+                } else {
+                    btn.classList.add('pending');
+                    btn.textContent = lang.rsvpPending;
+                }
+            }
+            const summary = document.getElementById('rsvp-summary');
+            if (yesCount === 0) summary.textContent = lang.rsvpSummaryNone;
+            else {
+                const num = currentLang === 'ar' ? yesCount.toString().replace(/[0-9]/g, c => '٠١٢٣٤٥٦٧٨٩'[c]) : yesCount;
+                summary.textContent = num + ' / 4' + lang.rsvpSummaryCount;
+            }
+        }
+
+        loadRsvp();
+
+        /* ========== COUNTDOWN ========== */
+        function updateCountdown() {
+            const party = new Date('2026-08-07T00:00:00+01:00');
+            let diff = party - new Date();
+            if (diff < 0) { ['cd-days','cd-hours','cd-min','cd-sec'].forEach(id => document.getElementById(id).textContent = '0'); return; }
+            const d = Math.floor(diff / 86400000); diff %= 86400000;
+            const h = Math.floor(diff / 3600000); diff %= 3600000;
+            const m = Math.floor(diff / 60000); diff %= 60000;
+            const s = Math.floor(diff / 1000);
+            const fmt = n => currentLang === 'ar' ? n.toString().replace(/[0-9]/g, c => '٠١٢٣٤٥٦٧٨٩'[c]) : n;
+            document.getElementById('cd-days').textContent = fmt(d);
+            document.getElementById('cd-hours').textContent = fmt(h);
+            document.getElementById('cd-min').textContent = fmt(m);
+            document.getElementById('cd-sec').textContent = fmt(s);
+        }
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+
+        /* ========== SCROLL ANIMATIONS ========== */
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+        }, { threshold: 0.1 });
+        document.querySelectorAll('.fade-up').forEach(el => obs.observe(el));
+    </script>
+</body>
+</html>
